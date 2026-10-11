@@ -1,0 +1,4 @@
+
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#050505; color:white; font-family:'Space Grotesk', sans-serif; overflow-x:hidden; }
+::-webkit-scrollbar { width:6px; } ::-webkit-scrollbar-thumb { background:#FDB913; }

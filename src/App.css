@@ -1,0 +1,22 @@
+
+.site { opacity:0; transition: opacity 1s ease; background:#050505; min-height:100vh; }
+.site.visible { opacity:1; }
+.nav { position:fixed; top:0; left:0; right:0; height:72px; display:flex; justify-content:space-between; align-items:center; padding:0 40px; background:rgba(5,5,5,0.8); backdrop-filter:blur(12px); border-bottom:1px solid #1a1a1a; z-index:50; }
+.nav-logo { height:36px; object-fit:contain; background:transparent; }
+.nav-links { display:flex; gap:24px; } .nav-links a { color:#999; text-decoration:none; font-size:14px; letter-spacing:1px; } .nav-links a:hover { color:#FDB913; }
+.hero { height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:0 24px; position:relative; overflow:hidden; }
+.bulb-bg { position:absolute; width:600px; height:600px; background:radial-gradient(circle, rgba(253,185,19,0.15) 0%, transparent 70%); filter:blur(40px); pointer-events:none; }
+.hero h1 { font-size: clamp(36px, 6vw, 72px); line-height:0.9; font-weight:700; } .hero h1 span { color:#FDB913; }
+.hero p { margin-top:20px; color:#888; font-size:18px; }
+.cta { margin-top:32px; background:#FDB913; color:black; padding:14px 28px; border-radius:999px; text-decoration:none; font-weight:700; }
+.work { padding:100px 40px; } .work h2 { font-size:32px; margin-bottom:40px; } .work h2 span { color:#FDB913; }
+.grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:24px; }
+.card { background:#111; border:1px solid #1f1f1f; border-radius:16px; padding:20px; } .card.featured { border-color:#FDB913; position:relative; }
+.mock { height:180px; background:#1a1a1a; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#555; margin-bottom:16px; }
+.mock.pos { background: linear-gradient(135deg, #1a1a1a, #2a2200); }
+.badge { position:absolute; top:12px; right:12px; background:#FDB913; color:black; font-size:10px; padding:4px 8px; border-radius:999px; font-weight:700; letter-spacing:1px; }
+.lab { padding:80px 40px; background:#0a0a0a; border-y:1px solid #1a1a1a; } .code-line { font-family:'JetBrains Mono', monospace; font-size: clamp(18px,3vw,28px); padding:12px 0; color:white; } .tag { color:#FDB913; }
+.manifesto { padding:120px 40px; } .manifesto h2 { font-size: clamp(32px,5vw,64px); line-height:1; } .manifesto span { color:#FDB913; }
+.footer { display:grid; grid-template-columns: 1fr 1fr; gap:40px; padding:80px 40px; border-top:1px solid #1a1a1a; } 
+.form { display:flex; flex-direction:column; gap:12px; } .form input, .form textarea { background:#111; border:1px solid #222; padding:14px; border-radius:8px; color:white; } .form input:focus, .form textarea:focus { border-color:#FDB913; outline:none; } .form button { background:#FDB913; color:black; border:none; padding:14px; border-radius:8px; font-weight:700; cursor:pointer; }
+@media(max-width:700px){ .footer{ grid-template-columns:1fr; } }
