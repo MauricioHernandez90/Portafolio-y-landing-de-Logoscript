@@ -1,117 +1,119 @@
 import { useState } from 'react'
+import './ContactForm.css'
 
-const initialValues = { name: '', email: '', message: '' }
+const PHONE = '523350517068'
+const initialForm = { nombre: '', email: '', mensaje: '' }
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function ContactForm() {
-  const [values, setValues] = useState(initialValues)
+  const [form, setForm] = useState(initialForm)
   const [errors, setErrors] = useState({})
   const [status, setStatus] = useState('idle')
 
-  function handleChange(event) {
+  const validate = () => {
+    const validationErrors = {}
+    if (!form.nombre.trim() || form.nombre.trim().length < 2) {
+      validationErrors.nombre = 'Dime cómo te llamas'
+    }
+    if (!form.mensaje.trim() || form.mensaje.trim().length < 10) {
+      validationErrors.mensaje = 'Cuéntame un poco más (mínimo 10 caracteres)'
+    }
+    if (form.email && !emailPattern.test(form.email)) {
+      validationErrors.email = 'Ese email no se ve bien'
+    }
+    return validationErrors
+  }
+
+  const handleChange = (event) => {
     const { name, value } = event.target
-    setValues(current => ({ ...current, [name]: value }))
+    setForm(current => ({ ...current, [name]: value }))
     if (errors[name]) {
-      setErrors(current => ({ ...current, [name]: '' }))
+      setErrors(current => {
+        const nextErrors = { ...current }
+        delete nextErrors[name]
+        return nextErrors
+      })
     }
   }
 
-  function validate() {
-    const nextErrors = {}
-    const name = values.name.trim()
-    const email = values.email.trim()
-    const message = values.message.trim()
-
-    if (name.length < 2) {
-      nextErrors.name = 'Escribe tu nombre (mínimo 2 caracteres).'
-    }
-    if (!email) {
-      nextErrors.email = 'El email es obligatorio.'
-    } else if (!emailPattern.test(email)) {
-      nextErrors.email = 'Escribe un email válido.'
-    }
-    if (message.length < 10) {
-      nextErrors.message = 'Cuéntame tu idea (mínimo 10 caracteres).'
-    }
-
-    setErrors(nextErrors)
-    return Object.keys(nextErrors).length === 0
-  }
-
-  async function handleSubmit(event) {
+  const handleSubmit = (event) => {
     event.preventDefault()
-    setStatus('idle')
-    if (!validate()) return
+    const validationErrors = validate()
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      return
+    }
 
     setStatus('sending')
-    try {
-      const endpoint = import.meta.env.VITE_CONTACT_ENDPOINT
-      if (endpoint) {
-        const response = await fetch(endpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(values),
-        })
-        if (!response.ok) throw new Error('Contact request failed')
-      } else {
-        await new Promise(resolve => setTimeout(resolve, 800))
-      }
+    setErrors({})
+
+    const message = [
+      `Hola Logoscript, soy ${form.nombre}.`,
+      form.email ? `Mi email: ${form.email}` : null,
+      '',
+      form.mensaje,
+    ].filter(Boolean).join('\n')
+    const url = `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`
+
+    window.open(url, '_blank', 'noopener,noreferrer')
+    setTimeout(() => {
       setStatus('success')
-    } catch {
-      setStatus('error')
-    }
+      setForm(initialForm)
+      setTimeout(() => setStatus('idle'), 4000)
+    }, 400)
   }
 
   return (
     <form onSubmit={handleSubmit} className="form" noValidate>
       <div className="form-field">
-        <label htmlFor="contact-name">Nombre</label>
+        <label htmlFor="nombre" className="sr-only">Tu nombre</label>
         <input
-          id="contact-name"
-          name="name"
-          value={values.name}
+          id="nombre"
+          name="nombre"
+          value={form.nombre}
           onChange={handleChange}
           placeholder="Tu nombre"
-          aria-invalid={Boolean(errors.name)}
-          aria-describedby={errors.name ? 'contact-name-error' : undefined}
+          aria-invalid={!!errors.nombre}
         />
-        {errors.name && <span id="contact-name-error" className="field-error">{errors.name}</span>}
+        {errors.nombre && <span className="form-error">{errors.nombre}</span>}
       </div>
 
       <div className="form-field">
-        <label htmlFor="contact-email">Email</label>
+        <label htmlFor="email" className="sr-only">Tu email (opcional)</label>
         <input
-          id="contact-email"
+          id="email"
           name="email"
           type="email"
-          value={values.email}
+          value={form.email}
           onChange={handleChange}
-          placeholder="Tu email"
-          aria-invalid={Boolean(errors.email)}
-          aria-describedby={errors.email ? 'contact-email-error' : undefined}
+          placeholder="Tu email (opcional)"
+          aria-invalid={!!errors.email}
         />
-        {errors.email && <span id="contact-email-error" className="field-error">{errors.email}</span>}
+        {errors.email && <span className="form-error">{errors.email}</span>}
       </div>
 
       <div className="form-field">
-        <label htmlFor="contact-message">Mensaje</label>
+        <label htmlFor="mensaje" className="sr-only">Cuéntame tu idea</label>
         <textarea
-          id="contact-message"
-          name="message"
-          value={values.message}
+          id="mensaje"
+          name="mensaje"
+          rows={5}
+          value={form.mensaje}
           onChange={handleChange}
           placeholder="Cuéntame tu idea"
-          aria-invalid={Boolean(errors.message)}
-          aria-describedby={errors.message ? 'contact-message-error' : undefined}
+          aria-invalid={!!errors.mensaje}
         />
-        {errors.message && <span id="contact-message-error" className="field-error">{errors.message}</span>}
+        {errors.mensaje && <span className="form-error">{errors.mensaje}</span>}
       </div>
 
       <button type="submit" disabled={status === 'sending'}>
-        {status === 'sending' ? 'Enviando...' : 'Enviar idea'}
+        {status === 'sending' ? 'Abriendo WhatsApp...' : 'Enviar por WhatsApp'}
       </button>
-      {status === 'success' && <p className="form-feedback success" role="status">¡Gracias! Te contactaré pronto.</p>}
-      {status === 'error' && <p className="form-feedback error" role="alert">Algo salió mal. Intenta de nuevo.</p>}
+      {status === 'success' && (
+        <p className="form-success">
+          ¡Listo! Se abrió WhatsApp con tu mensaje. Solo dale enviar.
+        </p>
+      )}
     </form>
   )
 }

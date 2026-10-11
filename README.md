@@ -28,3 +28,11 @@ npm run build
 Sube a Vercel: conecta el repo, hace build automático.
 
 Para agregar tus 2 proyectos reales, edita src/App.jsx en la sección Work.
+
+## Secciones pendientes de contenido
+
+Las siguientes secciones se eliminaron del sitio porque aún no tienen contenido real. Documentadas aquí para no olvidarlas:
+
+- **Work / Portafolio**: eliminada el 10 de octubre de 2026. Se reactivará cuando haya al menos 2-3 proyectos reales terminados y con permiso de mostrarse. Los estilos `.work`, `.grid`, `.card`, `.mock` y `.badge` siguen en App.css listos para reactivarse.
+- **Testimonios**: pendiente hasta tener primeros clientes que den feedback.
+- **Blog / Recursos**: opcional, futuro. Contenido educativo para posicionamiento SEO.
