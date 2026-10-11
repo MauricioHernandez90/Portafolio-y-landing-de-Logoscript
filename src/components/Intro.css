@@ -84,8 +84,26 @@
 @keyframes dotFlicker { 0%,100%{opacity:1; filter:drop-shadow(0 0 6px white)} 50%{opacity:0.4; filter:drop-shadow(0 0 2px white)} }
 .bulb-halo { position:absolute; top:90px; left:50%; transform:translateX(-50%); width:280px; height:280px; background:radial-gradient(circle, rgba(253,185,19,0.35) 0%, transparent 70%); filter:blur(20px); pointer-events:none; animation: haloPulse 2s ease-in-out infinite; }
 @keyframes haloPulse { 0%,100%{opacity:0.6; transform:translateX(-50%) scale(1)} 50%{opacity:1; transform:translateX(-50%) scale(1.1)} }
-.bulb-text { margin-top:12px; text-align:center; font-size:12px; letter-spacing:3px; color:#aaa; line-height:1.6; animation: textIn 0.8s 0.6s both; }
+.bulb-text {
+	margin-top: 32px;
+	text-align: center;
+	font-family: 'JetBrains Mono', monospace;
+	font-size: 14px;
+	letter-spacing: 4px;
+	color: #aaa;
+	line-height: 1.4;
+	white-space: nowrap;
+	animation: textIn 0.8s 0.6s both;
+}
 .bulb-text span { color:#FDB913; }
 @keyframes textIn { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:translateY(0)} }
 
 .readme { white-space:pre-wrap; }
+
+@media (max-width: 480px) {
+	.bulb-text {
+		font-size: 11px;
+		letter-spacing: 2px;
+		white-space: normal;
+	}
+}

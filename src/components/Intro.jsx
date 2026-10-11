@@ -145,7 +145,7 @@ export default function Intro({ onFinish }){
               </g>
             </svg>
             <div className="bulb-halo" />
-            <p className="bulb-text">DETRÁS DE CADA<br/><span>SCRIPT, UNA IDEA.</span></p>
+            <p className="bulb-text">DETRÁS DE CADA <span>SCRIPT, UNA IDEA.</span></p>
           </div>
         </div>
       )}
