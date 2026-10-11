@@ -11,12 +11,69 @@
 .bar-dot { position:absolute; right:-4px; top:50%; transform:translateY(-50%); width:10px; height:10px; background:#FDB913; border-radius:50%; box-shadow:0 0 8px #FDB913; }
 .bar-label { font-size:10px; letter-spacing:2px; color:#666; font-family:'JetBrains Mono', monospace; }
 
-.flash { position:absolute; inset:0; background:white; animation: flash 0.15s ease-out; }
-@keyframes flash { 0%{opacity:0.9} 100%{opacity:0} }
-.particles { position:absolute; inset:0; width:100%; height:100%; }
+.flash-radial {
+	position: absolute;
+	inset: 0;
+	pointer-events: none;
+	z-index: 1;
+	background: radial-gradient(
+		circle at center,
+		#FFFFFF 0%,
+		#FFFFFF 30%,
+		rgba(255, 255, 255, 0.95) 50%,
+		rgba(255, 255, 255, 0.6) 75%,
+		rgba(255, 255, 255, 0) 100%
+	);
+	transform: scale(0);
+	animation: flashExpand 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
 
-.bulb-phase { position:fixed; inset:0; background:#050505; display:flex; align-items:center; justify-content:center; z-index:10000; animation: bulbFadeIn 0.6s ease; }
-@keyframes bulbFadeIn { from{opacity:0; transform:scale(0.9)} to{opacity:1; transform:scale(1)} }
+@keyframes flashExpand {
+	0% {
+		transform: scale(0);
+		opacity: 0;
+	}
+	15% {
+		opacity: 1;
+	}
+	40% {
+		transform: scale(1.5);
+		opacity: 1;
+	}
+	55% {
+		transform: scale(2.5);
+		opacity: 1;
+	}
+	100% {
+		transform: scale(3);
+		opacity: 0;
+	}
+}
+
+.particles {
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 2;
+}
+
+.bulb-phase {
+	position: fixed;
+	inset: 0;
+	background: #050505;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 10000;
+	animation: bulbFadeIn 0.9s ease forwards;
+	opacity: 0;
+}
+
+@keyframes bulbFadeIn {
+	from { opacity: 0; background: #FFFFFF; }
+	to { opacity: 1; background: #050505; }
+}
 .bulb-container { position:relative; display:flex; flex-direction:column; align-items:center; }
 .bulb-svg { overflow:visible; }
 .bulb-outline { stroke-dasharray: 600; stroke-dashoffset: 600; animation: draw 0.8s ease forwards; }

@@ -46,7 +46,7 @@ export default function Intro({ onFinish }){
       return ()=>clearTimeout(t)
     }
     if(phase==='explode'){
-      const t = setTimeout(()=>setPhase('bulb'), 800)
+      const t = setTimeout(()=>setPhase('bulb'), 1200)
       return ()=>clearTimeout(t)
     }
     if(phase==='bulb'){
@@ -110,7 +110,7 @@ export default function Intro({ onFinish }){
 
       {phase==='explode' && (
         <>
-          <div className="flash" />
+          <div className="flash-radial" />
           <canvas ref={canvasRef} className="particles" />
         </>
       )}
