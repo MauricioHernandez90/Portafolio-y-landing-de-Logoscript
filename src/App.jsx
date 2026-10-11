@@ -1,6 +1,7 @@
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import Intro from './components/Intro.jsx'
+import ContactForm from './components/ContactForm.jsx'
 import './App.css'
 import logoFull from './assets/logo-full.png'
 
@@ -10,7 +11,8 @@ export default function App(){
 
   useEffect(()=>{
     if(!showIntro) {
-      setTimeout(()=>setShowSite(true), 300)
+      const timerId = setTimeout(()=>setShowSite(true), 300)
+      return ()=>clearTimeout(timerId)
     }
   },[showIntro])
 
@@ -20,14 +22,14 @@ export default function App(){
       <div className={`site ${showSite ? 'visible' : ''}`}>
         <nav className="nav">
           <img src={logoFull} alt="Logoscript" className="nav-logo" />
-          <div className="nav-links"><a href="#work">Work</a><a href="#lab">Lab</a><a href="#contact">Contacto</a></div>
+          <div className="nav-links"><a href="#work">Work</a><a href="#servicios">Servicios</a><a href="#valores">Valores</a><a href="#contact">Contacto</a></div>
         </nav>
 
         <section className="hero">
           <div className="bulb-bg" />
-          <h1>Código que se convierte en<br/><span>negocio.</span></h1>
-          <p>Desarrollamos webs que no solo se ven bien, venden.</p>
-          <a href="#work" className="cta">Ver proyectos</a>
+          <h1>Ordena tu negocio.<br/><span>Libera tu tiempo.</span></h1>
+          <p>Toda gran obra empieza con una palabra. Tomamos lo que tienes en la cabeza y lo convertimos en un sistema que funciona.</p>
+          <a href="#contact" className="cta">Hablemos de tu idea</a>
         </section>
 
         <section id="work" className="work">
@@ -45,14 +47,53 @@ export default function App(){
           </div>
         </section>
 
-        <section id="lab" className="lab">
-          <div className="code-line"><span className="tag">&lt;Service&gt;</span> Desarrollo Web <span className="tag">&lt;/Service&gt;</span></div>
-          <div className="code-line"><span className="tag">&lt;Service&gt;</span> Sistemas POS <span className="tag">&lt;/Service&gt;</span></div>
-          <div className="code-line"><span className="tag">&lt;Service&gt;</span> Automatización <span className="tag">&lt;/Service&gt;</span></div>
+        <section id="servicios" className="servicios">
+          <div className="services-grid">
+            <article className="service-card">
+              <span className="service-tag">Negocios</span>
+              <h3>Para tu negocio</h3>
+              <p>Procesos claros, herramientas a la medida y sistemas que trabajan por ti. Deja de apagar fuegos y vuelve a dirigir tu empresa.</p>
+            </article>
+            <article className="service-card">
+              <span className="service-tag">Creativos</span>
+              <h3>Para creadores</h3>
+              <p>Damos vida a proyectos de artistas, cantantes e influencers. Tu visión, ejecutada con precisión técnica.</p>
+            </article>
+            <article className="service-card">
+              <span className="service-tag">Apps</span>
+              <h3>Para problemas reales</h3>
+              <p>Desarrollamos aplicaciones que resuelven necesidades concretas de las personas. Tecnología con propósito.</p>
+            </article>
+          </div>
         </section>
 
         <section className="manifesto">
-          <h2>No usamos plantillas.<br/>Escribimos <span>Logoscripts.</span></h2>
+          <p className="eyebrow">Nuestra forma de trabajar</p>
+          <h2>Toda gran obra empieza<br/>con una <span>palabra.</span></h2>
+          <p className="manifesto-body">
+            Una idea clara que se ordena, se escribe y se ejecuta.
+            Tomamos lo que tienes en la cabeza y lo convertimos en un sistema que funciona.
+          </p>
+        </section>
+
+        <section className="vision">
+          <h2>Hacia dónde <span>vamos</span></h2>
+          <p>
+            Queremos ser una empresa que construye con propósito.
+            Que cada proyecto cuide lo que importa: la familia, la integridad
+            y el tiempo de quien emprende. Nuestra meta es la libertad del emprendedor:
+            que su negocio funcione con orden y que su vida no dependa de él.
+          </p>
+        </section>
+
+        <section id="valores" className="valores">
+          <h2>Lo que nos <span>mueve</span></h2>
+          <div className="valores-grid">
+            <div className="valor"><h3>Familia primero.</h3></div>
+            <div className="valor"><h3>Orden que libera.</h3></div>
+            <div className="valor"><h3>Soluciones a la medida, no plantillas.</h3></div>
+            <div className="valor"><h3>Palabra cumplida: lo que se dice, se ejecuta.</h3></div>
+          </div>
         </section>
 
         <footer id="contact" className="footer">
@@ -61,12 +102,7 @@ export default function App(){
             <p>Lagos de Moreno, Jalisco, MX</p>
             <p>hola@logoscript.dev</p>
           </div>
-          <form onSubmit={e=>e.preventDefault()} className="form">
-            <input placeholder="Tu nombre" />
-            <input placeholder="Tu email" />
-            <textarea placeholder="Cuéntame tu idea"></textarea>
-            <button>Enviar idea</button>
-          </form>
+          <ContactForm />
         </footer>
       </div>
     </>

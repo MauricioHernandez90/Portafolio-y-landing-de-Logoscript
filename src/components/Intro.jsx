@@ -9,7 +9,6 @@ export default function Intro({ onFinish }){
   const [progress, setProgress] = useState(0)
   const [particles, setParticles] = useState([])
   const canvasRef = useRef(null)
-  const bulbRef = useRef(null)
 
   // Loading progress = pressure
   useEffect(()=>{
@@ -61,6 +60,7 @@ export default function Intro({ onFinish }){
     if(phase!=='explode' || !canvasRef.current) return
     const canvas = canvasRef.current
     const ctx = canvas.getContext('2d')
+    if (!ctx) return
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
     let animParts = particles.map(p=>({...p, x: canvas.width/2, y: canvas.height/2}))
